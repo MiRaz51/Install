@@ -26,12 +26,20 @@
         }
     </style>
     <script>
-        function solicitarAcceso() {
-            const contraseñaCorrecta = "tuContraseñaSegura"; // Cambia esto por la contraseña deseada
+        async function verificarAcceso() {
+            const hashCorrecto = "5e884898da28047151d0e56f8dc6292773603d0d6aabbddafba7d17d99f09333"; // Hash SHA-256 de "password"
             const contraseñaIngresada = document.getElementById("contraseña").value;
             const mensajeError = document.getElementById("mensaje-error");
 
-            if (contraseñaIngresada === contraseñaCorrecta) {
+            // Calcula el hash SHA-256 de la contraseña ingresada
+            const encoder = new TextEncoder();
+            const data = encoder.encode(contraseñaIngresada);
+            const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+
+            // Compara el hash calculado con el hash almacenado
+            if (hashHex === hashCorrecto) {
                 mensajeError.textContent = "";
                 alert("Acceso autorizado. Redirigiendo...");
                 window.location.href = "https://hgomero.wordpress.com"; // Cambia por la URL de destino
@@ -45,7 +53,7 @@
     <h1>Acceso Restringido</h1>
     <p>Introduce la contraseña para continuar:</p>
     <input type="password" id="contraseña" placeholder="Escribe la contraseña aquí">
-    <button onclick="solicitarAcceso()">Acceder</button>
+    <button onclick="verificarAcceso()">Acceder</button>
     <p id="mensaje-error" class="error"></p>
 </body>
 </html>
