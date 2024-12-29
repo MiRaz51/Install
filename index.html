@@ -3,15 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiRaz</title>
+    <title>MiRaz Acceso Restringido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        function solicitarAcceso() {
+            const contraseñaCorrecta = "tuContraseñaSegura"; // Cambia esto por la contraseña deseada
+            const contraseñaIngresada = document.getElementById("contraseña").value;
+            const mensajeError = document.getElementById("mensaje-error");
+
+            if (contraseñaIngresada === contraseñaCorrecta) {
+                mensajeError.textContent = "";
+                alert("Acceso autorizado. Redirigiendo...");
+                window.location.href = "https://hgomero.wordpress.com"; // Cambia por la URL de destino
+            } else {
+                mensajeError.textContent = "Contraseña incorrecta. Inténtalo de nuevo.";
+            }
+        }
+    </script>
 </head>
 <body>
-    <h1>MiRaz</h1>
-    <h3>Instalador de MiRaz</h3>
-
-    <h3>Acceso a pagina de descarga</h3>
-    <a href="https://hgomero.wordpress.com/">Descargar</a>
-<h3>Acceso a pagina de descarga ultimo cambio</h3>
-    
+    <h1>Acceso Restringido</h1>
+    <p>Introduce la contraseña para continuar:</p>
+    <input type="password" id="contraseña" placeholder="Escribe la contraseña aquí">
+    <button onclick="solicitarAcceso()">Acceder</button>
+    <p id="mensaje-error" class="error"></p>
 </body>
 </html>
